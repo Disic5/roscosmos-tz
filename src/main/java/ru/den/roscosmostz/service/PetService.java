@@ -3,6 +3,7 @@ package ru.den.roscosmostz.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.den.roscosmostz.dto.PetDto;
 import ru.den.roscosmostz.entity.Pet;
 import ru.den.roscosmostz.mapper.PetMapper;
@@ -28,6 +29,7 @@ public class PetService {
         return mapper.toDtoList(repository.findAll());
     }
 
+    @Transactional
     public PetDto savePet(PetDto dto) {
         log.info("Saving Pet");
         Pet savedPet = repository.save(mapper.toEntity(dto));
@@ -40,6 +42,7 @@ public class PetService {
         return mapper.toDto(pet);
     }
 
+    @Transactional
     public void deletePetById(Long id) {
         repository.findById(id)
                 .map(entity -> {
@@ -48,6 +51,7 @@ public class PetService {
                 }).orElseThrow(() -> new EntityNotFoundException(ENTITY_NOT_FOUND.formatted(id)));
     }
 
+    @Transactional
     public PetDto updatePetById(Long id, PetDto dto) {
         return mapper.toDto(repository.findById(id)
                 .map(entity -> mapper.update(dto, entity))
