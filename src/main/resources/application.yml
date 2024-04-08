@@ -13,20 +13,13 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          keycloak:
-#            client-id: backend
-#            client-secret: e2de4aa8-f2b6-40e4-b48f-8c0ed9ae2934
-#            authorization-grant-type: authorization_code
-
 keycloak:
   auth-server-url: https://igfu.dev.roscosmos.digital/auth
   realm: rc-digital-test-vacancy
   resource: backend
+#  principal-attribute: preferred_username
   credentials:
     secret: e2de4aa8-f2b6-40e4-b48f-8c0ed9ae2934
-  use-resource-role-mappings: true
-  public-client: true
+  bearer-only: true
+
+

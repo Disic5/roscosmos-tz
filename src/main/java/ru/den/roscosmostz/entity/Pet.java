@@ -1,16 +1,9 @@
 package ru.den.roscosmostz.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.UuidGenerator;
+import lombok.*;
 import ru.den.roscosmostz.enums.Gender;
 
-import java.util.UUID;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -20,8 +13,8 @@ import java.util.UUID;
 @Table(name = "pets")
 public class Pet {
     @Id
-    @UuidGenerator
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private Integer age;
     private Gender gender;

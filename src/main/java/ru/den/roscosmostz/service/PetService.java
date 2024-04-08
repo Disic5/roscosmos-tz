@@ -1,6 +1,5 @@
 package ru.den.roscosmostz.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -9,8 +8,8 @@ import ru.den.roscosmostz.entity.Pet;
 import ru.den.roscosmostz.mapper.PetMapper;
 import ru.den.roscosmostz.repository.PetRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -35,13 +34,13 @@ public class PetService {
         return mapper.toDto(savedPet);
     }
 
-    public PetDto getPetById(UUID id) {
+    public PetDto getPetById(Long id) {
         Pet pet = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(ENTITY_NOT_FOUND.formatted(id)));
         return mapper.toDto(pet);
     }
 
-    public void deletePetById(UUID id) {
+    public void deletePetById(Long id) {
         repository.findById(id)
                 .map(entity -> {
                     repository.deleteById(id);
@@ -49,7 +48,7 @@ public class PetService {
                 }).orElseThrow(() -> new EntityNotFoundException(ENTITY_NOT_FOUND.formatted(id)));
     }
 
-    public PetDto updatePetById(UUID id, PetDto dto) {
+    public PetDto updatePetById(Long id, PetDto dto) {
         return mapper.toDto(repository.findById(id)
                 .map(entity -> mapper.update(dto, entity))
                 .orElseThrow(() -> new EntityNotFoundException(ENTITY_NOT_FOUND.formatted(id))));
